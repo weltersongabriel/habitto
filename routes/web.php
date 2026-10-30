@@ -7,3 +7,4 @@ Route::get('/', [App\Http\Controllers\SiteController::class, 'index'])->name('in
 
 # LOGIN
 Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'index'])->name('login');
+Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login.post');
