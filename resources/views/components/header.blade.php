@@ -1,10 +1,20 @@
 <header class="bg-white border-b border-2">
+    <div>
+        logo
+    </div>
 
-<div>
-    <p class="bg-gray-800 text-white text-lg font-bold py-2 px-4">Habitto</p>
-</div>
+    <div>
+        Github
 
-<div>
-    <a href="https://github.com/welterson/habitto" class="text-blue-500 hover:underline">Github</a>
-</div>
+        @auth
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="text-blue-500 hover:underline">Logout</button>
+            </form>
+        @endauth
+
+        @guest
+            <a href="{{ route('login') }}" class="text-blue-500 hover:underline">Login</a>
+        @endguest
+    </div>
 </header>

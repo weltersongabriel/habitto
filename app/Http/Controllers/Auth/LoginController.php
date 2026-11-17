@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    // GET /login
     public function index()
     {
         return view('login');
     }
 
-    // POST /login
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -22,15 +21,23 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth()->attempt($credentials)) {
-                
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('/');
-        } else {
-            return back()->withErrors([
-                'email' => 'Credenciais inválidas.',
-            ]);
+            return redirect()->intended(route('dashboard'));
         }
+
+        return back()->withErrors([
+            'email' => 'Credenciais inválidas.',
+        ]);
+    }
+
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect(route('index'));
     }
 }
